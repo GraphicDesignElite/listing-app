@@ -17,8 +17,8 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             // Foriegn Review Belongs to CPA listing 
-            $table->bigInteger('cpa_listing_id')->unsigned();
-            $table->foreign('cpa_listing_id')->references('id')->on('cpa_listings')->onDelete('cascade');
+            $table->bigInteger('listing_id')->unsigned();
+            $table->foreign('listing_id')->references('id')->on('listings')->onDelete('cascade');
 
             $table->string('reviewer_first_name');
             $table->string('reviewer_last_name');

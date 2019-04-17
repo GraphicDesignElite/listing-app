@@ -19,9 +19,9 @@ Route::get('/about', 'PagesController@about');
 
 
 
-Route::resource('cpa-listings', 'CpaListingController');
+Route::resource('listings', 'ListingController');
 // Handle Reviews
-Route::post('/cpa-listings/{cpalisting}/review', 'ReviewController@store');
+Route::post('/listings/{listing}/review', 'ReviewController@store');
 
 // Create Reports for Inappropriate Comments
 Route::get('/report/{review}/create', 'ReportController@create');

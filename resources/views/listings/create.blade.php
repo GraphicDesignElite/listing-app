@@ -3,12 +3,12 @@
 @section('content')
 <div class="jumbotron">
     <h1 class="display-3">Create a New Listing</h1>
-    <p class="lead">Provide the details of a new CPA listing below.</p>
+    <p class="lead">Provide the details of a new listing below.</p>
 </div>
 
 @include('partials.error-message')
 
-<form action="/cpa-listings" method="POST">
+<form action="/listings" method="POST">
     <div class="container">
         <div class="col-md-4">
             <div class="form-group">

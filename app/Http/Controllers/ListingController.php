@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CpaListing;
-class CpaListingController extends Controller
+use App\Listing;
+class ListingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class CpaListingController extends Controller
      */
     public function index()
     {
-        $listings = CpaListing::all();
-        return view('cpa-listings.index',compact('listings'));
+        $listings = Listing::all();
+        return view('listings.index',compact('listings'));
     }
 
     /**
@@ -24,7 +24,7 @@ class CpaListingController extends Controller
      */
     public function create()
     {
-        return view('cpa-listings.create');
+        return view('listings.create');
     }
 
     /**
@@ -40,8 +40,8 @@ class CpaListingController extends Controller
             'description' => 'required'
         ]);
      
-        CpaListing::create($validated);
-        return redirect('/cpa-listings')->with('success', 'The listing has been created.');
+        Listing::create($validated);
+        return redirect('/listings')->with('success', 'The listing has been created.');
     }
 
     /**
@@ -50,10 +50,10 @@ class CpaListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CpaListing $cpaListing)
+    public function show(Listing $listing)
     { 
         
-        return view('cpa-listings.show', compact('cpaListing'));
+        return view('listings.show', compact('listing'));
     }
 
     /**
@@ -62,9 +62,9 @@ class CpaListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CpaListing $cpaListing)
+    public function edit(Listing $listing)
     {
-        return view('cpa-listings.edit', compact('cpaListing'));
+        return view('listings.edit', compact('listing'));
     }
 
     /**
@@ -74,16 +74,16 @@ class CpaListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CpaListing $cpaListing)
+    public function update(Listing $listing)
     {
         $validated = request()->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'description' => 'required'
         ]);
-        $cpaListing->title = request('title');
-        $cpaListing->description = request('description');
-        $cpaListing->save();
-        return redirect('/cpa-listings')->with('success', 'Your listing has been updated.');
+        $listing->title = request('title');
+        $listing->description = request('description');
+        $listing->save();
+        return redirect('/listings')->with('success', 'Your listing has been updated.');
     }
 
     /**
@@ -92,10 +92,10 @@ class CpaListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CpaListing $cpaListing)
+    public function destroy(Listing $listing)
     {
-        $cpaListing->delete();
-        return redirect('/cpa-listings')->with('danger', 'The listing has been permanently deleted.');
+        $listing->delete();
+        return redirect('/listings')->with('danger', 'The listing has been permanently deleted.');
 
     }
 }

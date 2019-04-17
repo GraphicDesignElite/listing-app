@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Review;
-use App\CpaListing;
+use App\Listing;
 
 class ReviewController extends Controller
 {
-    public function store(CpaListing $cpalisting)
+    public function store(Listing $listing)
     {
         $validated = request()->validate([
             'review_text' => ['required', 'min:1', 'max:255'],
@@ -19,7 +19,7 @@ class ReviewController extends Controller
             'service_reviewed' => 'required',
             'review_type' => ['required', 'min:3', 'max:3']
         ]);
-        $cpalisting->addReview($validated);
+        $listing->addReview($validated);
         return back()->with('success', 'Thank you, your review has been added successfully.');
     }
     public function addReport($review){

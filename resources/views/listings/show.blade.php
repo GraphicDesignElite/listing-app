@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="jumbotron text-center">
-        <h1 class="display-3">{{ $cpaListing->title }}</h1>
-        <p class="lead">{{ $cpaListing->description }}</p>
-        <a name="edit" id="edit" class="btn btn-primary" href="{{$cpaListing->id}}/edit" role="button">Edit Listing</a>
+        <h1 class="display-3">{{ $listing->title }}</h1>
+        <p class="lead">{{ $listing->description }}</p>
+        <a name="edit" id="edit" class="btn btn-primary" href="{{$listing->id}}/edit" role="button">Edit Listing</a>
     </div>
 
     <!--app('googlemaps')->getKey() -->
@@ -13,7 +13,7 @@
     <div class="col-md-4">
         @include('partials.error-message')
         <div class="create-review">
-            <form action="/cpa-listings/{{$cpaListing->id}}/review" method="POST">
+            <form action="/listings/{{$listing->id}}/review" method="POST">
                 @csrf
                 
                 <div class="form-group">
@@ -48,15 +48,15 @@
                     <small id="helpId" class="form-text text-muted">This will not be displayed or shared.</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Your Review</button>
-                <input type="hidden" name="cpa_listing_id" value="{{$cpaListing->id}}">
+                <input type="hidden" name="cpa_listing_id" value="{{$listing->id}}">
                 <input type="hidden" name="review_type" value="c2p">
             </form>
         </div>
     </div>
     <hr>
-    @if($cpaListing->reviews->count())
+    @if($listing->reviews->count())
     
-    @foreach ($cpaListing->reviews as $review)
+    @foreach ($listing->reviews as $review)
         <div class="review-block">
             <div class="star-rating">
                 {{ $review->rating}} | {{$review->service_reviewed}}

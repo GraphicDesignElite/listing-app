@@ -50,7 +50,7 @@ class ReportController extends Controller
         // Mark review as flagged
         $review->flagged = $review->flagged + 1;
         $review->save();
-        return redirect('/cpa-listings')->with('danger', 'Your report was submitted.');
+        return redirect('/listings')->with('danger', 'Your report was submitted.');
     
     }
 

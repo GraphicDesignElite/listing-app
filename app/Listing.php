@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CpaListing extends Model
+class Listing extends Model
 {
     protected $fillable = [
         'title', 
@@ -19,10 +19,11 @@ class CpaListing extends Model
         'street_address_2',
         'city',
         'state',
-        'zipcode'
+        'zipcode',
+        'user_id'
     ];
     public function reviews(){
-        // CPAs have many reviews
+        // Listings have many reviews
         return $this->hasMAny(Review::class);
     }
     public function addReview($review){

@@ -48,8 +48,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Listings</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="/cpa-listings">All CPAs</a>
-                            <a class="dropdown-item" href="/cpa-listings/create">Create a Listing</a>
+                            <a class="dropdown-item" href="/listings">All Listings</a>
+                            <a class="dropdown-item" href="/listings/create">Create a Listing</a>
                         </div>
                     </li>
                     <li class="nav-item">
