@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            // Foreign Report belongs to Review
+            // Report belongs to Review
             $table->bigInteger('review_id')->unsigned();
             $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
 

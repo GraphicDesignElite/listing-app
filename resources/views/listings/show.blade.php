@@ -2,20 +2,24 @@
 
 @section('content')
     <div class="jumbotron text-center">
-        <h1 class="display-3">{{ $listing->title }}</h1>
+        <h1 class="display-3"><span class="text-capitalize">{{ $listing->first_name }} {{ $listing->last_name }}</span></h1>
         <p class="lead">{{ $listing->description }}</p>
-        <a name="edit" id="edit" class="btn btn-primary" href="{{$listing->id}}/edit" role="button">Edit Listing</a>
+        <p class="text-capitalize">
+            {{ $listing->street_address }}<br/>
+            {{ $listing->city }}, {{ $listing->state }} {{ $listing->zipcode }}<br/>
+        </p>
+        @if (!Auth::guest())
+            @if(auth()->id() == $listing->owner_id || Auth::user()->isAdmin())
+                <a name="edit" id="edit" class="btn btn-primary" href="/dashboard/listing/{{$listing->id}}/edit" role="button">Edit Listing</a>
+            @endif
+        @endif
     </div>
 
-    <!--app('googlemaps')->getKey() -->
-
-
     <div class="col-md-4">
-        @include('partials.error-message')
+        @include('partials.form-error-message')
         <div class="create-review">
             <form action="/listings/{{$listing->id}}/review" method="POST">
                 @csrf
-                
                 <div class="form-group">
                   <label for="rating">Select Your Rating</label>
                   <input type="number" class="form-control" name="rating" id="rating" aria-describedby="helpId" min="1" max="5" required>
@@ -65,7 +69,7 @@
             <div class="review-time">
                 <small>Reviewed on {{ $review->created_at->format('m/d/y' ) }}</small>
             </div>
-            <div class="review-name">
+            <div class="review-name text-capitalize">
                 By <strong>{{ $review->reviewer_first_name}} {{ $review->reviewer_last_name[0]}}.</strong>
             </div>
            

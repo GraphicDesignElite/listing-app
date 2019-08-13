@@ -16,7 +16,7 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            // Foriegn Review Belongs to CPA listing 
+            // Review Belongs to CPA listing 
             $table->bigInteger('listing_id')->unsigned();
             $table->foreign('listing_id')->references('id')->on('listings')->onDelete('cascade');
 

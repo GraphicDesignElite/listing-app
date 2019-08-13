@@ -7,7 +7,11 @@
 </div>
 <ul>
     @foreach ($listings as $listing)
-        <li><a href="/listings/{{$listing->id}}">{{$listing->title}}</a></li>
+        <li>
+            <a href="/listings/{{$listing->id}}">
+                <span class="name">{{$listing->first_name}}</span> <span class="name">{{$listing->last_name}}</span>
+            </a>
+        </li>
     @endforeach
 </ul>
 

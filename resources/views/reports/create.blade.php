@@ -5,7 +5,7 @@
     <h1 class="display-3">Report a Review</h1>
     <p class="lead">When a review contains offensive content, we encourage users to file a report. Please provide the details of your report below. Your report is private, and never shared with anyone on the site.</p>
 </div>
-@include('partials.error-message')
+@include('partials.form-error-message')
 <form action="/report/{{ $review->id }}/store" method="POST">
     <div class="container">
         <div class="col-md-4">

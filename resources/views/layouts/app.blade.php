@@ -49,15 +49,34 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Listings</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
                             <a class="dropdown-item" href="/listings">All Listings</a>
+                            <a class="dropdown-item" href="/all-states">Listings By State</a>
+                            
                             <a class="dropdown-item" href="/listings/create">Create a Listing</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Tax Professionals</a>
-                    </li>
+                    <!-- if logged in -->
+                    @if (Auth::check())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
+                                <h5 class="dropdown-header">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h5> 
+                                <a class="dropdown-item" href="/dashboard">My Dashboard</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">Logout</a>    
+                                @include('partials.logout-form-hidden')
+                            </div>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Sign Up</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </nav>

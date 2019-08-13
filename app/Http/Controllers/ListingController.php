@@ -4,8 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Listing;
+use App\City;
+use App\State;
+use Auth;
 class ListingController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +25,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::all();
+        $listings = Listing::where('hide_listing', '!=', true)->get();
         return view('listings.index',compact('listings'));
     }
 
@@ -24,6 +36,7 @@ class ListingController extends Controller
      */
     public function create()
     {
+        abort_unless(Auth::user()->authorizeRoles(['superadmin', 'admin']), 403);
         return view('listings.create');
     }
 
@@ -36,11 +49,39 @@ class ListingController extends Controller
     public function store(Request $request)
     {
         $validated = request()->validate([
-            'title' => ['required', 'min:3', 'max:255'],
-            'description' => 'required'
+            'first_name' => ['required','max:255'],
+            'last_name' => ['required','max:255'],
+            'description' => 'required',
+            'phone_number' => 'nullable',
+            'fax_number' => 'nullable',
+            'email' => 'email', 'nullable',
+            'website_url' => 'nullable',
+            'street_address' => 'nullable',
+            'street_address_2' => 'nullable',
+            'city' => 'required',
+            'state' => ['required','max:2', 'min:2'],
+            'zipcode' => ['nullable','min:5', 'alpha_num'],
         ]);
-     
-        Listing::create($validated);
+
+        $nameslug = str_slug($validated['first_name'] . '-' . $validated['last_name']);
+        
+        $validated['slug'] = $nameslug;
+        
+        
+        if(request()->state && request()->city){
+            $slug = str_slug(request()->city . '-' . request()->state, '-');
+            
+            $city = City::firstOrNew(
+                ['slug' => $slug ], 
+                [
+                'name' => request()->city, 
+                'state_code' => request()->state,
+                'zipcode' => request()->zipcode
+                ]);
+            $city->save();
+        }
+        
+        $listing = Listing::create($validated);
         return redirect('/listings')->with('success', 'The listing has been created.');
     }
 
@@ -56,46 +97,6 @@ class ListingController extends Controller
         return view('listings.show', compact('listing'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Listing $listing)
-    {
-        return view('listings.edit', compact('listing'));
-    }
+    
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Listing $listing)
-    {
-        $validated = request()->validate([
-            'title' => ['required', 'min:3', 'max:255'],
-            'description' => 'required'
-        ]);
-        $listing->title = request('title');
-        $listing->description = request('description');
-        $listing->save();
-        return redirect('/listings')->with('success', 'Your listing has been updated.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Listing $listing)
-    {
-        $listing->delete();
-        return redirect('/listings')->with('danger', 'The listing has been permanently deleted.');
-
-    }
 }
